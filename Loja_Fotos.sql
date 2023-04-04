@@ -2,7 +2,6 @@ CREATE DATABASE Loja_Fotos
 GO
 USE Loja_Fotos
 GO
-
 -- **Tabelas** --
 
 
@@ -122,12 +121,11 @@ CREATE TABLE Venda (
     codigo_funcionario UNIQUEIDENTIFIER,
     data_venda DATETIME NOT NULL,
     cond_pagamento VARCHAR(20) NOT NULL,
-    valor_venda FLOAT NOT NULL,
+    valor_venda FLOAT NOT NULL DEFAULT (0),
 
     CONSTRAINT PK_Venda PRIMARY KEY (numero),
     CONSTRAINT FK_Venda_Pessoa FOREIGN KEY (codigo_pessoa)  REFERENCES Pessoa (codigo),
-    CONSTRAINT FK_Venda_Funcionario FOREIGN KEY (codigo_funcionario)  REFERENCES Funcionario (codigo),
-    CONSTRAINT D_Venda_Valor_Venda DEFAULT (0)
+    CONSTRAINT FK_Venda_Funcionario FOREIGN KEY (codigo_funcionario)  REFERENCES Funcionario (codigo)
 )
 GO
 
@@ -237,8 +235,8 @@ EXEC.InserirPessoa 'Marcos'
 EXEC.InserirPessoa 'Tatiana'
 SELECT * FROM Pessoa
 
-EXEC.InserCF 'c4963f4b-83f8-45b8-a316-13e1f69ac1b2', '12345678900', '123', 'M', '10/02/1990'
-EXEC.InserCF '99c00a4f-6f0b-4fa9-9b2f-4c390b199cd6', '12345678910', '123', 'F', '03/04/2000'
+EXEC.InserCF '37a8ddfa-ee63-4da9-9022-0767dca5801b', '12345678900', '123', 'M', '10/02/1990'
+EXEC.InserCF '11af1dac-feef-4e9e-960f-59e1ed1d9c79', '12345678910', '123', 'F', '03/04/2000'
 SELECT * FROM Cliente_Fisico
 
 EXEC.InserirFuncionario 'Jubileu'
@@ -248,17 +246,17 @@ EXEC.InserirProduto 'Produto legal', 'CoolItems', 10.0, 20.0
 EXEC.InserirProduto 'Produto muito bom', 'CoolItems', 3.0, 50.0
 SELECT * FROM Produto
 
-EXEC.InserirEstoque '98788e4c-d228-437b-9bf3-5fb2f56e0aab', 2, 3
-EXEC.InserirEstoque '31b25953-f9b3-4793-a52e-bdbfaecc5dee', 1, 7
+EXEC.InserirEstoque 'e50a3638-9fdb-4f0c-886c-7c99c3165b14', 2, 3
+EXEC.InserirEstoque '6c3f5f70-5851-4be3-86d9-ef19a8ba5486', 1, 7
 SELECT * FROM Estoque
 
-EXEC.CriarVenda 'c4963f4b-83f8-45b8-a316-13e1f69ac1b2', '021ecfb7-2574-420a-b081-10e584a90277', 'Fiado'
-EXEC.CriarVenda '99c00a4f-6f0b-4fa9-9b2f-4c390b199cd6', '021ecfb7-2574-420a-b081-10e584a90277', 'Kwanza'
+EXEC.CriarVenda '37a8ddfa-ee63-4da9-9022-0767dca5801b', '387edbe9-5f9e-4296-9074-d5d8485a536e', 'Fiado'
+EXEC.CriarVenda '11af1dac-feef-4e9e-960f-59e1ed1d9c79', '387edbe9-5f9e-4296-9074-d5d8485a536e', 'Kwanza'
 SELECT * FROM Venda
 
-EXEC.InserirProdutoVenda '98788e4c-d228-437b-9bf3-5fb2f56e0aab', '1b5e2171-6cf6-4262-a53a-2dec71ac2dd7', 30, 2
-EXEC.InserirProdutoVenda '31b25953-f9b3-4793-a52e-bdbfaecc5dee', '1b5e2171-6cf6-4262-a53a-2dec71ac2dd7' , 50, 3
-EXEC.InserirProdutoVenda '31b25953-f9b3-4793-a52e-bdbfaecc5dee', '9657d724-b6fa-4e33-b944-9d5eeb1e5369', 20, 7
+EXEC.InserirProdutoVenda 'e50a3638-9fdb-4f0c-886c-7c99c3165b14', '2ea6ed06-7159-4313-8a24-6afd473c3f46', 30, 2
+EXEC.InserirProdutoVenda '6c3f5f70-5851-4be3-86d9-ef19a8ba5486', '2ea6ed06-7159-4313-8a24-6afd473c3f46' , 50, 3
+EXEC.InserirProdutoVenda 'e50a3638-9fdb-4f0c-886c-7c99c3165b14', 'a0a5c239-4b4b-472a-b787-9acae0fd4fcb', 20, 7
 SELECT * FROM Venda_Produto
 
 DELETE FROM Venda 
